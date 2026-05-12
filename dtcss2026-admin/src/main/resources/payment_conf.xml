@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Conf>
     <!-- 僅可以設定 Test or Production-->
-    <OperatingMode>Production</OperatingMode>
+    <OperatingMode>Test</OperatingMode>
     <!-- 商家檔案(Production_Account 或 Stage_Account) 會對應到 MerchantInfo商家資訊 -->
-    <MercProfile>Production_Account</MercProfile>
+    <MercProfile>Stage_Account</MercProfile>
     <!-- 指定是否為專案平台商，若設定為Y，則會將目前設定的MerchantID 帶入API的 PlatformId參數中，
     若設置為N，則是帶入空字串 -->
     <IsProjectContractor>N</IsProjectContractor>

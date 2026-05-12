@@ -31,7 +31,7 @@ public class AddMemberDTO {
 	@Schema(description = "E-Mail")
 	private String email;
 
-	@NotBlank
+//	@NotBlank
 	@Schema(description = "密碼")
 	private String password;
 

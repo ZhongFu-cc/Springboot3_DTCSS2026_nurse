@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import tw.org.dtcss.pojo.DTO.EmailBodyContent;
 import tw.org.dtcss.pojo.entity.Attendees;
 import tw.org.dtcss.pojo.entity.Member;
+import tw.org.dtcss.pojo.entity.Orders;
 import tw.org.dtcss.pojo.entity.Tag;
 import tw.org.dtcss.service.AsyncService;
 import tw.org.dtcss.service.AttendeesService;
@@ -41,11 +42,11 @@ public class FreeModeStrategy implements ProjectModeStrategy {
 	public void handleRegistration(Member member) {
 
 		// 1.創建「免費」註冊費訂單，狀態為 「已付款」
-		ordersService.createFreeRegistrationOrder(member);
+		Orders registrationOrder = ordersService.createFreeRegistrationOrder(member);
 
 		// 2.創建註冊成功通知信件內容
 		EmailBodyContent registrationSuccessContent = notificationService.generateRegistrationSuccessContent(member,
-				BANNER_PHOTO_URL);
+				BANNER_PHOTO_URL,registrationOrder);
 
 		// 3.異步寄送信件
 		asyncService.sendCommonEmail(member.getEmail(), PROJECT_NAME + " Registration Successful",

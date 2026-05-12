@@ -8,6 +8,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>dtcss2026-admin</artifactId>
+    <name>dtcss2026-nurse-admin</name>
 
     <dependencies>
 

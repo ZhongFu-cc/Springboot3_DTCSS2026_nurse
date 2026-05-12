@@ -1,5 +1,6 @@
 package tw.org.dtcss.service.impl;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -14,6 +15,7 @@ import tw.org.dtcss.enums.MemberCategoryEnum;
 import tw.org.dtcss.enums.ProjectModeEnum;
 import tw.org.dtcss.pojo.DTO.EmailBodyContent;
 import tw.org.dtcss.pojo.entity.Member;
+import tw.org.dtcss.pojo.entity.Orders;
 import tw.org.dtcss.pojo.entity.Paper;
 import tw.org.dtcss.service.NotificationService;
 
@@ -25,6 +27,9 @@ public class NotificationServiceImpl implements NotificationService {
 
 	@Value("${project.name}")
 	private String PROJECT_NAME;
+
+	@Value("${project.domain}")
+	private String DOMAIN;
 
 	@Value("${project.email.reply-to}")
 	private String REPLY_TO;
@@ -41,6 +46,7 @@ public class NotificationServiceImpl implements NotificationService {
 	/**
 	 * 固定通用的信件變量
 	 */
+	private static final String FIELD_DOMAIN = "domain";
 	private static final String FIELD_BANNER_PHOTO_URL = "bannerPhotoUrl";
 	private static final String FIELD_CONFERENCE_NAME = "conferenceName";
 	private static final String FIELD_UPDATE_TIME = "updateTime";
@@ -59,8 +65,14 @@ public class NotificationServiceImpl implements NotificationService {
 	private static final String FIELD_PHONE = "phone";
 	private static final String FIELD_CATEGORY = "category";
 
+	// 繳費連結
+	private static final String FIELD_PAYMENT_AMOUNT = "paymentAmount";
+	private static final String FIELD_PAYMENT_URL = "paymentUrl";
+	private static final String PREFIX_PAYMENT_URL = "/orders/payment";
+
 	@Override
-	public EmailBodyContent generateRegistrationSuccessContent(Member member, String bannerPhotoUrl) {
+	public EmailBodyContent generateRegistrationSuccessContent(Member member, String bannerPhotoUrl,
+			Orders registrationOrder) {
 		Context context = new Context();
 
 		// 1.設置通用變量
@@ -81,6 +93,14 @@ public class NotificationServiceImpl implements NotificationService {
 		context.setVariable(FIELD_PHONE, member.getPhone());
 		// Category 要轉換成字串
 		context.setVariable(FIELD_CATEGORY, MemberCategoryEnum.fromValue(member.getCategory()).getLabelEn());
+
+		// compareTo結果:1=大於;0=等於;-1=小於
+		// 如果訂單不為0元訂單，設置付費連結;
+		if (registrationOrder.getTotalAmount().compareTo(BigDecimal.ZERO) > 0) {
+			context.setVariable(FIELD_PAYMENT_AMOUNT, registrationOrder.getTotalAmount());
+			context.setVariable(FIELD_PAYMENT_URL,
+					DOMAIN + PREFIX_PAYMENT_URL + "?id=" + registrationOrder.getOrdersId());
+		}
 
 		// 3. 根據 project.language 選擇模板路徑（無需 if-else 太多，簡單拼接）
 		String languagePath = "";
@@ -225,6 +245,7 @@ public class NotificationServiceImpl implements NotificationService {
 		// 1.設置通用變量
 		context.setVariable(FIELD_BANNER_PHOTO_URL, bannerPhotoUrl);
 		context.setVariable(FIELD_CONFERENCE_NAME, PROJECT_NAME);
+		context.setVariable(FIELD_DOMAIN, DOMAIN);
 
 		// 2. 這是給管理者的信，所以預設信件就好
 		String languagePath = "";

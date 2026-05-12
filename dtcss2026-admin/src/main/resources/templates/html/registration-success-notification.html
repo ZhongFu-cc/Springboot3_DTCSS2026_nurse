@@ -37,7 +37,7 @@
         <table width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:640px;width: 640px;">
             <tr>
                 <td>
-                    <img th:src="${bannerPhotoUrl}" alt="Conference Banner" width="640"
+                    <img th:if="${!#strings.isEmpty(bannerPhotoUrl)}" th:src="${bannerPhotoUrl}" alt="Conference Banner" width="640"
                         style="max-width: 100%; width: 640px; display: block;">
                 </td>
             </tr>

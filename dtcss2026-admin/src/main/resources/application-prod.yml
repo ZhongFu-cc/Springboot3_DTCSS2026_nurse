@@ -36,7 +36,7 @@ spring:
     driver-class-name: org.mariadb.jdbc.Driver
     # 配置URL,mysql8.0剛出時不配置?serverTimezone=Asia/Taipei,會報啟動錯誤
     # 現在好像解決了
-    url: jdbc:mariadb://localhost:3306/dtcss2026_international_conference?rewriteBatchedStatements=true
+    url: jdbc:mariadb://localhost:3306/dtcss2026_nurse_international_conference?rewriteBatchedStatements=true
     # 配置連接用戶
     username: ${DB_USER}
     # 配置用戶密碼
@@ -44,8 +44,8 @@ spring:
     #hikari:
 
   mail:
-    # host: smtp.gmail.com
-    host: smtp-relay.brevo.com
+    host: smtp.gmail.com
+    # host: smtp-relay.brevo.com
     port: 587
     username: ${MAIL_USERNAME}
     password: ${MAIL_PASSWORD}
@@ -215,37 +215,37 @@ minio:
 # 自定義，專案相關
 project:
   # 專案域名
-  domain: https://tobss.org.tw
+  domain: https://dtcss-nurse.zfcloud.cc
   # 活動名稱
-  name: Dtcss 2026
+  name: 大林慈濟第十四屆血液透析瘻管治療與照護國際研討會 - 8/23(日) 護理場
   # 活動名稱縮寫/別名
   alias: dtcss2026
   # 語言，可選值zh_TW / en ，用於選擇中文信zh_TW 或 英文信en
-  language: en
+  language: zh_TW
   # Banner 圖片
-  banner-url: https://tobss.org.tw/img/banner.jpg
+  banner-url: 
   # 群組相關，與一次寄送 email 數量有關
   group-size: 200
-  # 報名模式，可選值: FREE / PREPAID / POSTPAID ，POSTPAID尚未實現
+  # 報名模式，可選值: FREE / PREPAID / POSTPAID 
   mode: POSTPAID
 
   # email 相關
   email:
     # 寄件人信箱 (自定義domain 需搭配 spring.mail.* 使用 + brevo STMP ,才有效果)
     # Gmail的話可以直接填進from , 讓寄信和收信的信箱相同
-    from: notify@tobss.org.tw
+    from: notify@zfcloud.cc
     # 寄件人顯示名稱
-    from-name: Dtcss 2026 Notification
+    from-name: 大林慈濟 心臟血管外科 2026 Notification
     # 回覆信箱
-    reply-to: topbs106@gmail.com
+    reply-to: Joanne.Wang@zhongfu-pr.com.tw
     # 付款相關
   payment:
     # 付款後客戶返回的頁面
-    client-back-url: https://tobss.org.tw/member
+    client-back-url: https://dtcss-nurse.zfcloud.cc/
     # 付款後，金流系統返回結果的頁面，prod-api 為生產環境的判斷詞墜
-    return-url: https://tobss.org.tw/prod-api/payment
+    return-url: https://dtcss-nurse.zfcloud.cc/prod-api/payment
     # 廠商訂單編號前墜,最多9碼,超過會被截斷
-    prefix: tobss
+    prefix: dtcss
 
   # 註冊費相關
   # 註冊費美金匯率(Long) , 32為 1美金 : 32台幣 , 不可小於0
@@ -259,18 +259,18 @@ project:
       # 第一階段早鳥，台灣人
       taiwan:
         # 要與 MemberCategoryEnum 的configKey對應，不能亂寫
-        member: 700
-        others: 600
-        non-member: 1000
+        member: 0
+        others: 0
+        non-member: 250
         mvp: 0
         speaker: 0
         moderator: 0
         staff: 0
       # 第一階段早鳥，外國人
       foreign:
-        member: 9600
-        others: 4800
-        non-member: 12800
+        member: 0
+        others: 0
+        non-member: 250
         mvp: 0
         speaker: 0
         moderator: 0
@@ -279,18 +279,18 @@ project:
     early-bird-phase2:
       # 第二階段早鳥，台灣人
       taiwan:
-        member: 700
-        others: 600
-        non-member: 1000
+        member: 0
+        others: 0
+        non-member: 250
         mvp: 0
         speaker: 0
         moderator: 0
         staff: 0
       # 第二階段早鳥，外國人
       foreign:
-        member: 9600
-        others: 4800
-        non-member: 12800
+        member: 0
+        others: 0
+        non-member: 250
         mvp: 0
         speaker: 0
         moderator: 0
@@ -299,18 +299,18 @@ project:
     early-bird-phase3:
       # 第三階段早鳥，台灣人
       taiwan:
-        member: 700
-        others: 600
-        non-member: 1000
+        member: 0
+        others: 0
+        non-member: 250
         mvp: 0
         speaker: 0
         moderator: 0
         staff: 0
       # 第三階段早鳥，外國人
       foreign:
-        member: 9600
-        others: 4800
-        non-member: 12800
+        member: 0
+        others: 0
+        non-member: 250
         mvp: 0
         speaker: 0
         moderator: 0
@@ -319,18 +319,18 @@ project:
     regular:
       # 一般階段，台灣人
       taiwan:
-        member: 1000
-        others: 1200
-        non-member: 1500
+        member: 0
+        others: 0
+        non-member: 250
         mvp: 0
         speaker: 0
         moderator: 0
         staff: 0
       # 一般階段，外國人
       foreign:
-        member: 12800
-        others: 6400
-        non-member: 16000
+        member: 0
+        others: 0
+        non-member: 250
         mvp: 0
         speaker: 0
         moderator: 0
@@ -339,20 +339,22 @@ project:
     on-site:
       # 現場報名，台灣人
       taiwan:
-        member: 1500
-        others: 1800
-        non-member: 2000
+        member: 0
+        others: 0
+        non-member: 250
         mvp: 0
         speaker: 0
         moderator: 0
         staff: 0
       # 現場報名，外國人
       foreign:
-        member: 12800
-        others: 6400
-        non-member: 16000
+        member: 0
+        others: 0
+        non-member: 250
         mvp: 0
         speaker: 0
         moderator: 0
         staff: 0
+
+
 

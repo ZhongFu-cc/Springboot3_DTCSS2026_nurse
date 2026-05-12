@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>[[${conferenceName}]] - 註冊確認</title>
+    <title>[[${conferenceName}]] - 報名確認</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -37,7 +37,7 @@
         <table width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:640px;width: 640px;">
             <tr>
                 <td>
-                    <img th:src="${bannerPhotoUrl}" alt="會議橫幅" width="640"
+                    <img th:if="${!#strings.isEmpty(bannerPhotoUrl)}" th:src="${bannerPhotoUrl}" alt="會議橫幅" width="640"
                         style="max-width: 100%; width: 640px; display: block;">
                 </td>
             </tr>
@@ -47,10 +47,10 @@
                 </td>
             </tr>
             <tr>
-                <td>我們很高興通知您，您已成功註冊。</td>
+                <td>我們很高興通知您，您已成功報名。</td>
             </tr>
             <tr>
-                <td>您的註冊詳細資訊如下：</td>
+                <td>您的報名詳細資訊如下：</td>
             </tr>
             <tr th:if="${!#strings.isEmpty(firstName)}">
                 <td><strong>名：</strong> <span th:text="${firstName}"></span></td>
@@ -70,9 +70,11 @@
             <tr th:if="${!#strings.isEmpty(phone)}">
                 <td><strong>電話：</strong> <span th:text="${phone}"></span></td>
             </tr>
+            <!--
             <tr th:if="${!#strings.isEmpty(category)}">
                 <td><strong>身分類別：</strong> <span th:text="${category}"></span></td>
             </tr>
+            -->
 
             <tr th:if="${mode == 'prepaid'}">
                 <td>
@@ -80,9 +82,19 @@
                 </td>
             </tr>
 
+            <!--
             <tr th:if="${mode == 'postpaid'}">
                 <td>
                     您現在可以繼續提交您的論文。然而，請注意，您的提交將被審核，但如果未支付註冊費用，則不符合發表資格。
+                </td>
+            </tr>
+            -->
+            
+            <!-- 判斷有無傳付款連結，如果有則放入信件中讓其付款 -->
+            <tr th:if="${!#strings.isEmpty(paymentUrl)}">
+                <td>
+                    <p th:text="|您的付款金額為：${#numbers.formatDecimal(paymentAmount, 1, 'COMMA', 0, 'POINT')} 元；請使用下列付款連結進行付款|"></p>
+                    <p>付款連結：<a th:href="${paymentUrl}" th:text="${paymentUrl}" ></a></p>
                 </td>
             </tr>
 

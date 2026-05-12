@@ -169,7 +169,7 @@ public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, Orders> impleme
 	}
 
 	@Override
-	public void createRegistrationOrder(BigDecimal amount, Member member) {
+	public Orders createRegistrationOrder(BigDecimal amount, Member member) {
 		// 1.新建 註冊費 訂單
 		Orders order = new Orders();
 		// 2.設定會員ID
@@ -186,10 +186,12 @@ public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, Orders> impleme
 		// 7.創建註冊費訂單細項
 		ordersItemService.createRegistrationOrderItem(order);
 
+		return order;
+		
 	}
 
 	@Override
-	public void createFreeRegistrationOrder(Member member) {
+	public Orders createFreeRegistrationOrder(Member member) {
 		// 1.新建 免註冊費 訂單
 		Orders order = new Orders();
 		// 2.設定會員ID
@@ -205,6 +207,8 @@ public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, Orders> impleme
 
 		// 7.創建註冊費訂單細項
 		ordersItemService.createRegistrationOrderItem(order);
+		
+		return order;
 
 	}
 
