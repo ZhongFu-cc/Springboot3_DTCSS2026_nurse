@@ -102,8 +102,9 @@ public interface OrdersService extends IService<Orders> {
 	 * 
 	 * @param amount
 	 * @param member
+	 * @return 
 	 */
-	void createRegistrationOrder(BigDecimal amount, Member member);
+	Orders createRegistrationOrder(BigDecimal amount, Member member);
 
 	/**
 	 * 創建 「免費」 註冊費訂單<br>
@@ -112,7 +113,7 @@ public interface OrdersService extends IService<Orders> {
 	 * 
 	 * @param member
 	 */
-	void createFreeRegistrationOrder(Member member);
+	Orders createFreeRegistrationOrder(Member member);
 
 	/**
 	 * 創建 團體報名 註冊費訂單<br>

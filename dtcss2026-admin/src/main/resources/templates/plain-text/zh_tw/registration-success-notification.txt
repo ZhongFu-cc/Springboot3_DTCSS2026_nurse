@@ -1,8 +1,8 @@
 歡迎來到 [[${conferenceName}]]！
 
-我們很高興通知您，您的註冊已成功完成。
+我們很高興通知您，您的報名已成功完成。
 
-您的註冊詳細資訊如下：
+您的報名詳細資訊如下：
 
 [# th:if="${!#strings.isEmpty(firstName)}"]
 名： [[${firstName}]]
@@ -28,20 +28,36 @@
 電話： [[${phone}]]
 [/]
 
+[# th:if="${!#strings.isEmpty(paymentUrl)}"]
+您的付款金額為：[[${#numbers.formatDecimal(paymentAmount, 1, 'COMMA', 0, 'POINT')}]] 元；請使用下列付款連結進行付款
+
+付款連結：[[${paymentUrl}]]
+[/]
+
+
+
+[#-- 以下區塊暫時停用
+
 [# th:if="${!#strings.isEmpty(category)}"]
 類別： [[${category}]]
 [/]
 
+--]
+
 [# th:if="${mode == 'prepaid'}"]
 登入後，請繼續支付註冊費用。
 完成此支付將讓您獲得獨家住宿折扣
-並讓您能夠提交會議作品。
+並讓您能夠提交稿件摘要。
 [/]
 
+[#-- 以下區塊暫時停用
+
 [# th:if="${mode == 'postpaid'}"]
-您現在可以繼續提交您的論文。然而，請注意，您的提交
+您現在可以繼續提交您的論文摘要。然而，請注意，您的提交
 將被審核，但如果未支付註冊費用，則不符合演講資格。
 [/]
+
+--]
 
 如有任何詢問，請聯繫 [[${replyTo}]]。
 

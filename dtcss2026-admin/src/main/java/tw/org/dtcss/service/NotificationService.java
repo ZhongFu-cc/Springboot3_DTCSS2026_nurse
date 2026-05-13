@@ -2,6 +2,7 @@ package tw.org.dtcss.service;
 
 import tw.org.dtcss.pojo.DTO.EmailBodyContent;
 import tw.org.dtcss.pojo.entity.Member;
+import tw.org.dtcss.pojo.entity.Orders;
 import tw.org.dtcss.pojo.entity.Paper;
 
 public interface NotificationService {
@@ -13,7 +14,7 @@ public interface NotificationService {
 	 * @param bannerPhotoUrl
 	 * @return
 	 */
-	EmailBodyContent generateRegistrationSuccessContent(Member member, String bannerPhotoUrl);
+	EmailBodyContent generateRegistrationSuccessContent(Member member, String bannerPhotoUrl,Orders registrationOrder);
 	
 	/**
 	 * 生成 團體報名 註冊成功的通知信件內容

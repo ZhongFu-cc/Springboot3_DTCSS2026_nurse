@@ -18,10 +18,10 @@
 </head>
 
 <body>
-    <table width="100%" cellpadding="0" cellspacing="0" border="0" width="640" style="max-width:640px;">
+    <table cellpadding="0" cellspacing="0" border="0" width="640" style="max-width:640px;">
         <tr>
             <td>
-                <img th:src="${bannerPhotoUrl}" alt="Conference Banner" width="640"
+                <img th:if="${!#strings.isEmpty(bannerPhotoUrl)}" th:src="${bannerPhotoUrl}" alt="Conference Banner" width="640"
                     style="max-width: 100%; width: 640px; display: block; object-fit:cover;">
             </td>
         </tr>
@@ -32,19 +32,13 @@
         </tr>
         <tr>
             <td style="text-align: center;">
-                活動當天憑下方QRcode至大會報到處，直接掃描，即可獲得小禮品並快速通關進入會場
+                以下是簽到 QRcode 請至大會報到處直接掃描，快速通關進入會場
             </td>
         </tr>
         <tr>
             <td style="text-align: center;">
-                <img src="https://ticbcs.zfcloud.cc/prod-api/attendees/qrcode?attendeesId=[[${attendeesId}]]"
+                <img src="${domain}/prod-api/attendees/qrcode?attendeesId=[[${attendeesId}]]"
                     alt="QR Code" />
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align: center;">
-                📍 地點：中國醫藥大學水湳校區 卓越大樓B2 國際會議廳 (406台中市北屯區經貿路一段100號)<br>
-                📅 時間：2025年06月28日(六) 以及 2025年06月29日(日)
             </td>
         </tr>
         <tr>

@@ -145,6 +145,11 @@ public class OrderPaymentManager {
 		if (GroupRegistrationEnum.SLAVE.getValue().equals(member.getGroupRole())) {
 			throw new OrderPaymentException(messageHelper.get(I18nMessageKey.Payment.Group.MUST_BE_PRIMARY));
 		}
+		
+		// 如果訂單已經付款也拋出錯誤，訂單已繳費
+		if(OrderStatusEnum.PAYMENT_SUCCESS.getValue().equals(order.getStatus())) {
+			throw new OrderPaymentException("付款已完成，請勿重複付款");
+		}
 
 		// 5.獲取當前時間並格式化，為了填充交易時間
 		String nowFormat = now.format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"));

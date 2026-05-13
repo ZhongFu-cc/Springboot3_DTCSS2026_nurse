@@ -10,9 +10,9 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum MemberCategoryEnum {
-	MEMBER(1,"member", "Member", "Member(會員)"),
-	OTHERS(2,"others", "Others", "Others(非會員)"),
-	NON_MEMBER(3,"non-member", "Non-Member", "Non-Member(非會員醫師)"),
+	MEMBER(1,"member", "8/22 Physician", "8/22 醫師場"),
+	OTHERS(2,"others", "8/22 TzuChi Nurse", "8/23 護理場_慈濟體系專區"),
+	NON_MEMBER(3,"non-member", "8/22 Nurse", "8/23 護理場"),
 	MVP(4,"mvp", "MVP", "MVP"),
 	SPEAKER(5,"speaker", "Speaker", "講者"),
 	MODERATOR(6,"moderator", "Moderator", "座長"),
