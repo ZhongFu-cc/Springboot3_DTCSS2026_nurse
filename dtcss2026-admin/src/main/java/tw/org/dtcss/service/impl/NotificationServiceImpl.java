@@ -68,7 +68,7 @@ public class NotificationServiceImpl implements NotificationService {
 	// 繳費連結
 	private static final String FIELD_PAYMENT_AMOUNT = "paymentAmount";
 	private static final String FIELD_PAYMENT_URL = "paymentUrl";
-	private static final String PREFIX_PAYMENT_URL = "/orders/payment";
+	private static final String PREFIX_PAYMENT_URL = "/payment";
 
 	@Override
 	public EmailBodyContent generateRegistrationSuccessContent(Member member, String bannerPhotoUrl,
