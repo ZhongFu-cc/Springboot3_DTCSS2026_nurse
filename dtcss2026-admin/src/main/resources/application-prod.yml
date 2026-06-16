@@ -217,7 +217,7 @@ project:
   # 專案域名
   domain: https://dtcss-nurse.zfcloud.cc
   # 活動名稱
-  name: 大林慈濟第十四屆血液透析瘻管治療與照護國際研討會 - 8/23(日) 護理場
+  name: 第十四屆大林慈濟醫院血液透析通路治療與照護國際研討會 - 8/23(日) 護理場
   # 活動名稱縮寫/別名
   alias: dtcss2026
   # 語言，可選值zh_TW / en ，用於選擇中文信zh_TW 或 英文信en
