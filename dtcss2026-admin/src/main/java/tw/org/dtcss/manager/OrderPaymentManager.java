@@ -173,7 +173,7 @@ public class OrderPaymentManager {
 		// 這邊不需要他回傳額外付款資料
 		aioCheckOutOneTime.setNeedExtraPaidInfo("N");
 		// 設定英文介面，不特別設定為 繁體中文
-		aioCheckOutOneTime.setLanguage("ENG");
+//		aioCheckOutOneTime.setLanguage("ENG");
 		// 這邊使用他預留的客製化欄位,填入我們的訂單ID,當他透過return URL 觸發我們API時會回傳
 		// 這邊因為還是只能String , 所以要將Long 類型做轉換
 		aioCheckOutOneTime.setCustomField1(String.valueOf(order.getOrdersId()));
