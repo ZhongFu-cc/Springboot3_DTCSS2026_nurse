@@ -30,10 +30,13 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import tw.org.dtcss.convert.MemberConvert;
 import tw.org.dtcss.exception.RegistrationInfoException;
@@ -315,6 +318,37 @@ public class MemberController {
 	}
 
 	/** 以下與會員登入有關 */
+
+	/**
+	 * 僅靠 email 登入
+	 */
+	public record OnlyEmailLogin(@NotBlank @Schema(description = "E-Mail") String email,
+
+			@NotBlank @Schema(description = "驗證碼key") String verificationKey,
+
+			@NotBlank @Schema(description = "用戶輸入的驗證碼") String verificationCode) {
+	}
+
+	@Operation(summary = "會員登入-僅使用 email ")
+	@PostMapping("login-only-email")
+	public R<SaTokenInfo> login(@Valid @RequestBody OnlyEmailLogin onlyEmailLogin) {
+
+		// 透過key 獲取redis中的驗證碼
+		String redisCode = redissonClient.<String>getBucket(onlyEmailLogin.verificationKey()).get();
+		String userVerificationCode = onlyEmailLogin.verificationCode();
+
+		// 判斷驗證碼是否正確,如果不正確就直接返回前端,不做後續的業務處理
+		if (userVerificationCode == null || redisCode == null
+				|| !redisCode.equals(userVerificationCode.trim().toLowerCase())) {
+			return R.fail("Verification code is incorrect");
+		}
+
+		// 驗證通過,刪除key 並往後執行添加操作
+		redissonClient.getBucket(onlyEmailLogin.verificationKey()).delete();
+		SaTokenInfo tokenInfo = memberAuthManager.onlyEmailLogin(onlyEmailLogin.email());
+		return R.ok(tokenInfo);
+	}
+
 	@Operation(summary = "會員登入-使用 email 和 password")
 	@PostMapping("login")
 	public R<SaTokenInfo> login(@Valid @RequestBody MemberEmailLogin memberEmailLogin) {
