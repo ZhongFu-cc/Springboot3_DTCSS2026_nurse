@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import cn.dev33.satoken.stp.SaTokenInfo;
+import jakarta.validation.constraints.NotBlank;
 import tw.org.dtcss.pojo.DTO.AddGroupMemberDTO;
 import tw.org.dtcss.pojo.DTO.AddMemberForAdminDTO;
 import tw.org.dtcss.pojo.DTO.MemberEmailLogin;
@@ -31,11 +32,12 @@ public interface MemberService extends IService<Member> {
 	/**
 	 * 有中文姓名就使用 <br>
 	 * 沒有就組裝英文姓名返回
+	 * 
 	 * @param member
 	 * @return
 	 */
 	String getOnlyMemberName(Member member);
-	
+
 	/**
 	 * mybatis 原始高速查詢所有Member<br>
 	 * 輸出Excel數據適用
@@ -52,7 +54,6 @@ public interface MemberService extends IService<Member> {
 
 	IPage<Member> getMemberPage(Page<Member> page);
 
-	
 	/**
 	 * 根據搜尋條件，獲取Member的分頁對象
 	 * 
@@ -95,7 +96,7 @@ public interface MemberService extends IService<Member> {
 	 * @param queryText
 	 * @return
 	 */
-	IPage<MemberTagVO> getUnpaidMemberPage(Page<Member> page, List<Orders> orderList,String country, String queryText);
+	IPage<MemberTagVO> getUnpaidMemberPage(Page<Member> page, List<Orders> orderList, String country, String queryText);
 
 	/**
 	 * 拿到當前團體標籤的index
@@ -104,15 +105,15 @@ public interface MemberService extends IService<Member> {
 	 * @return
 	 */
 	int getMemberGroupIndex(int groupSize);
-	
+
 	/**
 	 * 拿到 某個身分類別 當前團體標籤的index
 	 * 
-	 * @param groupSize 一組的數量(人數)
+	 * @param groupSize          一組的數量(人數)
 	 * @param memberCategoryEnum Enum中的類別
 	 * @return
 	 */
-	
+
 	/**
 	 * 拿到 某個身分類別 當前團體標籤的index
 	 * 
@@ -120,7 +121,7 @@ public interface MemberService extends IService<Member> {
 	 * @param memberCategory member.category的值
 	 * @return
 	 */
-	int getMemberCategoryGroupIndex(int groupSize,Integer memberCategory);
+	int getMemberCategoryGroupIndex(int groupSize, Integer memberCategory);
 
 	/**
 	 * 校驗email是否註冊過<br>
@@ -161,6 +162,7 @@ public interface MemberService extends IService<Member> {
 
 	/**
 	 * 會員個人更新基本資料
+	 * 
 	 * @param putMemberDTO
 	 */
 	void updateMember(PutMemberDTO putMemberDTO);
@@ -188,7 +190,7 @@ public interface MemberService extends IService<Member> {
 	 * @return
 	 */
 	SaTokenInfo login(MemberEmailLogin memberEmailLogin);
-	
+
 	/**
 	 * 會員登入 - IdCard & Password
 	 * 
@@ -198,21 +200,21 @@ public interface MemberService extends IService<Member> {
 	SaTokenInfo login(MemberIdCardLogin memberIdCardLogin);
 
 	/**
-	 * 「外國人」登入 - Email & Password 綁定國籍「非」台灣 
+	 * 「外國人」登入 - Email & Password 綁定國籍「非」台灣
 	 * 
 	 * @param memberLoginDTO
 	 * @return
 	 */
 	SaTokenInfo foreignLogin(MemberLoginDTO memberLoginDTO);
-	
+
 	/**
-	 * 「本國人」登入 - IdCard & Password 綁定國籍 台灣 
+	 * 「本國人」登入 - IdCard & Password 綁定國籍 台灣
 	 * 
 	 * @param memberLoginDTO
 	 * @return
 	 */
 	SaTokenInfo localLogin(MemberLoginDTO memberLoginDTO);
-	
+
 	/**
 	 * 會員登出
 	 */
@@ -249,6 +251,12 @@ public interface MemberService extends IService<Member> {
 	 */
 	Map<Long, Member> getMemberMap();
 
-	
+	/**
+	 * 透過email快速登入
+	 * 
+	 * @param email
+	 * @return
+	 */
+	SaTokenInfo quickLogin(String email);
 
 }

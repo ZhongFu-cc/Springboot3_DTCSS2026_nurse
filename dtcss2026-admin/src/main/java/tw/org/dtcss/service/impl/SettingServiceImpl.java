@@ -166,18 +166,18 @@ public class SettingServiceImpl extends ServiceImpl<SettingMapper, Setting> impl
 
 		// 獲取當前時間
 		LocalDateTime now = LocalDateTime.now();
-		
-	    // 條件 A：當前時間是否在「最後註冊時間」之前 (精確到秒)
-	    boolean isBeforeLastRegistration = !now.isAfter(setting.getLastRegistrationTime());
 
-	    // 條件 B：當前日期是否落在活動區間內 (包含起訖日當天)
-	    LocalDate eventStartDate = setting.getEventStartDate();
-	    LocalDate eventEndDate = setting.getEventEndDate();
-	    // 判斷是否處於活動時間
-	    boolean isInEventPeriod = isDuringTheEvent(now,eventStartDate,eventEndDate);
+		// 條件 A：當前時間是否在「最後註冊時間」之前 (精確到秒)
+		boolean isBeforeLastRegistration = !now.isAfter(setting.getLastRegistrationTime());
 
-	    // 只要符合其中一個條件，就允許註冊
-	    return isBeforeLastRegistration || isInEventPeriod;
+		// 條件 B：當前日期是否落在活動區間內 (包含起訖日當天)
+		LocalDate eventStartDate = setting.getEventStartDate();
+		LocalDate eventEndDate = setting.getEventEndDate();
+		// 判斷是否處於活動時間
+		boolean isInEventPeriod = isDuringTheEvent(now, eventStartDate, eventEndDate);
+
+		// 只要符合其中一個條件，就允許註冊
+		return isBeforeLastRegistration || isInEventPeriod;
 	}
 
 	@Override
@@ -220,15 +220,27 @@ public class SettingServiceImpl extends ServiceImpl<SettingMapper, Setting> impl
 	}
 
 	@Override
+	public Boolean isDuringEventPeriod() {
+		Setting setting = this.getSetting();
+		// 檢查設定是否存在，以及 Slide 上傳的開始和結束時間是否都已設定。
+		if (setting == null || setting.getEventStartDate() == null || setting.getEventEndDate() == null) {
+			throw new SettingException("活動日設置不完整：請檢查活動開始日期 和 活動結束日期是否已配置。");
+		}
+		LocalDateTime now = LocalDateTime.now();
+		return isDuringTheEvent(now, setting.getEventStartDate(), setting.getEventEndDate());
+
+	}
+
+	@Override
 	public SettingVO getFrontSetting() {
 		SettingVO vo = new SettingVO();
-		
+
 		// 設定各類功能 「當前」的開啟狀態
 		vo.setIsRegistrationOpen(isRegistrationOpen());
 		vo.setIsGroupRegistrationOpen(isGroupRegistrationOpen());
 		vo.setIsAbstractSubmissionOpen(isAbstractSubmissionOpen());
 		vo.setIsSlideUploadOpen(isSlideUploadOpen());
-		
+
 		return vo;
 	}
 
