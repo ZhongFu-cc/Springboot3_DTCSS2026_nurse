@@ -19,17 +19,22 @@ import lombok.RequiredArgsConstructor;
 import tw.org.dtcss.convert.AttendeesConvert;
 import tw.org.dtcss.convert.CheckinRecordConvert;
 import tw.org.dtcss.enums.CheckinActionTypeEnum;
+import tw.org.dtcss.exception.CheckinRecordException;
 import tw.org.dtcss.handler.AttendeesVOHandler;
 import tw.org.dtcss.pojo.DTO.addEntityDTO.AddCheckinRecordDTO;
 import tw.org.dtcss.pojo.VO.AttendeesVO;
 import tw.org.dtcss.pojo.VO.CheckinRecordVO;
 import tw.org.dtcss.pojo.entity.Attendees;
 import tw.org.dtcss.pojo.entity.CheckinRecord;
+import tw.org.dtcss.pojo.entity.Form;
+import tw.org.dtcss.pojo.entity.FormResponse;
 import tw.org.dtcss.pojo.entity.Member;
 import tw.org.dtcss.pojo.excelPojo.AttendeesExcel;
 import tw.org.dtcss.pojo.excelPojo.CheckinRecordExcel;
 import tw.org.dtcss.service.AttendeesService;
 import tw.org.dtcss.service.CheckinRecordService;
+import tw.org.dtcss.service.FormResponseService;
+import tw.org.dtcss.service.FormService;
 import tw.org.dtcss.service.MemberService;
 
 @Component
@@ -42,6 +47,8 @@ public class CheckinRecordManager {
 	private final AttendeesService attendeesService;
 	private final AttendeesConvert attendeesConvert;
 	private final AttendeesVOHandler attendeesVOHandler;
+	private final FormService formService;
+	private final FormResponseService formResponseService;
 
 	/**
 	 * 獲得此筆簽到退資料 及 簽到者身分
@@ -140,10 +147,30 @@ public class CheckinRecordManager {
 	 * @return
 	 */
 	public CheckinRecordVO addCheckinRecord(AddCheckinRecordDTO addCheckinRecordDTO) {
-		// 1.新增簽到/退紀錄
+
+		//拿到memberId
+		Attendees attendee = attendeesService.getAttendees(addCheckinRecordDTO.getAttendeesId());
+
+		// 如果本次為簽退操作
+		if (CheckinActionTypeEnum.CHECKOUT.getValue().equals(addCheckinRecordDTO.getActionType())) {
+
+			// 獲取簽退表單
+			Form checkoutForm = formService.getCheckoutForm();
+			if (checkoutForm != null) {
+				// 查看此與會者有沒有填寫簽退表單，沒有填寫過則拋出錯誤
+				List<FormResponse> formResponses = formResponseService
+						.searchSubmissionsByMember(checkoutForm.getFormId(), attendee.getMemberId());
+				if (formResponses.isEmpty()) {
+					throw new CheckinRecordException("未填寫會後表單，請先進行填寫");
+				}
+			}
+
+		}
+
+		// 新增簽到/退紀錄
 		CheckinRecord checkinRecord = checkinRecordService.addCheckinRecord(addCheckinRecordDTO);
 
-		// 2.組裝VO對象並返回
+		// 組裝VO對象並返回
 		return this.getCheckinRecordVO(checkinRecord.getCheckinRecordId());
 	}
 
@@ -151,7 +178,7 @@ public class CheckinRecordManager {
 	 * 下載所有簽到/退紀錄
 	 * 
 	 * @param response
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	public void downloadExcel(HttpServletResponse response) throws IOException {
 

@@ -22,6 +22,13 @@ public interface FormService extends IService<Form> {
 	Form searchForm(Long formId);
 
 	/**
+	 * 獲取簽退表單
+	 * 
+	 * @return
+	 */
+	Form getCheckoutForm();
+
+	/**
 	 * 判斷目前是否有綁定簽退表單,已存在DB中<br>
 	 * 這邊會排除這次傳入的表單本身
 	 * 
@@ -50,6 +57,5 @@ public interface FormService extends IService<Form> {
 	Form create(AddFormDTO addForm);
 
 	void modify(PutFormDTO putFormDTO);
-
 
 }
