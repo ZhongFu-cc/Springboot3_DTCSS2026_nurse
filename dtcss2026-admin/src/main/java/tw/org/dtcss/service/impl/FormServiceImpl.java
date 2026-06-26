@@ -39,6 +39,14 @@ public class FormServiceImpl extends ServiceImpl<FormMapper, Form> implements Fo
 	}
 
 	@Override
+	public Form getCheckoutForm() {
+		LambdaQueryWrapper<Form> queryWrapper = new LambdaQueryWrapper<>();
+		// 1 代表有綁定簽退
+		queryWrapper.eq(Form::getRequiredForCheckout, 1);
+		return baseMapper.selectOne(queryWrapper);
+	}
+
+	@Override
 	public boolean existCheckoutFormInDB(Form form) {
 		LambdaQueryWrapper<Form> queryWrapper = new LambdaQueryWrapper<>();
 		// 1 代表有綁定簽退
