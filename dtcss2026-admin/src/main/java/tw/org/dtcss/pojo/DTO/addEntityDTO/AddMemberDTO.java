@@ -19,11 +19,11 @@ public class AddMemberDTO {
 	@Schema(description = "中文姓名，外國人非必填，台灣人必填")
 	private String chineseName;
 
-	@NotBlank
+//	@NotBlank
 	@Schema(description = "名字, 華人的名在後  , 外國人的名在前")
 	private String firstName;
 
-	@NotBlank
+//	@NotBlank
 	@Schema(description = "姓氏, 華人的姓氏在前, 外國人的姓氏在後")
 	private String lastName;
 
