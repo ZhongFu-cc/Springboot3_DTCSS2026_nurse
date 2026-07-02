@@ -661,4 +661,19 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
 		return memberList.stream().collect(Collectors.toMap(Member::getMemberId, Function.identity()));
 	}
 
+	@Override
+	public SaTokenInfo quickLogin(String email) {
+		// 僅判斷 email 是否有存在 
+		LambdaQueryWrapper<Member> memberQueryWrapper = new LambdaQueryWrapper<>();
+		memberQueryWrapper.eq(Member::getEmail, email);
+		Member member = baseMapper.selectOne(memberQueryWrapper);
+
+		if (member != null) {
+			return this.returnSaTokenInfo(member);
+		}
+
+		// 如果 member為null , 則直接拋出異常
+		throw new AccountPasswordWrongException(messageHelper.get(I18nMessageKey.Registration.Auth.WRONG_ACCOUNT));
+	}
+
 }
