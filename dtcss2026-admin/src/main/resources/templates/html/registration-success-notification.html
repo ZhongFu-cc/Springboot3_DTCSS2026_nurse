@@ -58,6 +58,9 @@
             <tr th:if="${!#strings.isEmpty(lastName)}">
                 <td><strong>Last Name:</strong> <span th:text="${lastName}"></span></td>
             </tr>
+            <tr th:if="${!#strings.isEmpty(chineseName)}">
+                <td><strong>Chinese Name:</strong> <span th:text="${chineseName}"></span></td>
+            </tr>
             <tr th:if="${!#strings.isEmpty(country)}">
                 <td><strong>Country:</strong> <span th:text="${country}"></span></td>
             </tr>
