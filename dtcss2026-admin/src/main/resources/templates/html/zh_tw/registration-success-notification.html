@@ -64,8 +64,11 @@
             <tr th:if="${!#strings.isEmpty(country)}">
                 <td><strong>國家：</strong> <span th:text="${country}"></span></td>
             </tr>
+            <tr th:if="${!#strings.isEmpty(receipt)}">
+                <td><strong>機構名稱(醫院)：</strong> <span th:text="${receipt}"></span></td>
+            </tr>
             <tr th:if="${!#strings.isEmpty(affiliation)}">
-                <td><strong>所屬機構：</strong> <span th:text="${affiliation}"></span></td>
+                <td><strong>單位(科別)：</strong> <span th:text="${affiliation}"></span></td>
             </tr>
             <tr th:if="${!#strings.isEmpty(jobTitle)}">
                 <td><strong>職稱：</strong> <span th:text="${jobTitle}"></span></td>
