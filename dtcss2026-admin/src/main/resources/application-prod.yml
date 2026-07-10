@@ -223,7 +223,7 @@ project:
   # 語言，可選值zh_TW / en ，用於選擇中文信zh_TW 或 英文信en
   language: zh_TW
   # Banner 圖片
-  banner-url: 
+  banner-url: https://dtcss-nurse.zfcloud.cc/_nuxt/banner.DruiHpna.jpg
   # 群組相關，與一次寄送 email 數量有關
   group-size: 200
   # 報名模式，可選值: FREE / PREPAID / POSTPAID 
