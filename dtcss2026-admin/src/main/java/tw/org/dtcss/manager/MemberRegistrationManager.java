@@ -81,10 +81,11 @@ public class MemberRegistrationManager {
 
 		// 2.新增會員
 		Member member = memberService.addMember(addMemberDTO);
+		System.out.println(member.getEmail() + "--------------------------------Email");
 
 		// 3.以當前模式策略,執行註冊流程 (計算金額=>產生訂單=>產生通知信並寄出)
 		projectModeContext.getStrategy().handleRegistration(member);
-
+		System.out.println("信件已寄出");
 		// 4.獲取當下Member群體的Index,進行會員標籤分組
 		tagAssignmentHelper.assignTag(member.getMemberId(), memberService::getMemberGroupIndex,
 				tagService::getOrCreateMemberGroupTag, memberTagService::addMemberTag);

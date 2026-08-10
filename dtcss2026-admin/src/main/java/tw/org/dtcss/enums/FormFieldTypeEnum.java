@@ -17,7 +17,7 @@ public enum FormFieldTypeEnum {
 	TEXT("text", "簡答", true), TEXTAREA("textarea", "詳答", true), NUMBER("number", "數字", true),
 	EMAIL("email", "E-Mail", true), SELECT("select", "下拉式選單", true), RADIO("radio", "單選題", true),
 	RATE("rate", "評分題", true), CHECKBOX("checkbox", "多選題", true), DATE("date", "日期題", true),
-	SECTION("section", "非問題,區塊段落", false), IMAGE("image", "非問題,區塊圖片", false);
+	SECTION("section", "非問題,區塊段落", false),DESCRIPTION("description", "非問題,區塊段落", false), IMAGE("image", "非問題,區塊圖片", false);
 
 	@EnumValue
 	@JsonValue // JSON 輸出用
